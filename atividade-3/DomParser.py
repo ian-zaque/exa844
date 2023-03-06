@@ -1,17 +1,27 @@
 from xml.dom.minidom import parse
+import time
 
 BancoDocument = parse('map.osm')
 
 print("Starting DOM Parser...")
-for c in BancoDocument.getElementsByTagName("node"):	
-	# print("Nome:", c.getElementsByTagName("nome")[0].firstChild.data)
-	# print("id: ", c.getAttribute("id"))
-    for tag in c.getElementsByTagName("tag"):
-        if tag.getAttribute("k") == "amenity":
-            print("Tipo: ", tag.getAttribute("v"))
+start_time = time.time()
+passedAmenity = False
+
+for element in BancoDocument.getElementsByTagName("node"):
+    for tag in element.getElementsByTagName("tag"):
         
-    # print("Nome: ", c.getElementsByTagName("tag"))
-    # print("ID: ", self.UID) 
-    # print("Tipo: ", self.type) 
-    # print("Lat: ", self.lat)
-    # print("Long: ", self.lon)
+        if tag.getAttribute("k") == "amenity":
+            passedAmenity = True
+            print("\n")
+            print("ID: ", element.getAttribute("id"))
+            print("Lat: ", element.getAttribute("lat"))
+            print("Long: ", element.getAttribute("lon"))
+            print("Tipo: ", tag.getAttribute("v"))
+            
+        if tag.getAttribute("k") == "name" and passedAmenity == True:
+            print("Nome: ", tag.getAttribute("v"))
+            passedAmenity = False
+            
+end_time = time.time()
+print("\n")
+print("Tempo de Execução DomParser:", end_time - start_time, 'segundos')
