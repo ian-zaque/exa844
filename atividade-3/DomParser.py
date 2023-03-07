@@ -6,21 +6,27 @@ BancoDocument = parse('map.osm')
 print("Starting DOM Parser...")
 start_time = time.time()
 passedAmenity = False
+id = ""
+lat = 0.0
+lon = 0.0
+nome = ""
+type = ""
 
-for element in BancoDocument.getElementsByTagName("node"):
-    for tag in element.getElementsByTagName("tag"):
+for node in BancoDocument.getElementsByTagName("node"):
+    id = node.getAttribute("id")
+    lat = float(node.getAttribute("lat"))
+    lon = float(node.getAttribute("lon"))
+    
+    for tag in node.getElementsByTagName("tag"):
         
         if tag.getAttribute("k") == "amenity":
             passedAmenity = True
-            print("\n")
-            print("ID: ", element.getAttribute("id"))
-            print("Lat: ", element.getAttribute("lat"))
-            print("Long: ", element.getAttribute("lon"))
-            print("Tipo: ", tag.getAttribute("v"))
+            type = tag.getAttribute("v")
             
         if tag.getAttribute("k") == "name" and passedAmenity == True:
-            print("Nome: ", tag.getAttribute("v"))
+            nome = tag.getAttribute("v")
             passedAmenity = False
+            print(f"ID: {id}, Nome: {nome}, Tipo: {type}, Lat.: {lat}, Lon.: {lon}")
             
 end_time = time.time()
 print("\n")
