@@ -8,15 +8,29 @@ htmlStr = '<html> <head> <meta charset="UTF-8"> <title>EXA844 - Atividade 5</tit
 imgSection = ""
 
 for link in links:
+    link = link.strip()
     page = urllib.request.urlopen(link)
     html = str(page.read().decode('utf-8'))
 
     soup = BeautifulSoup(html, 'html.parser')
+    titulo = soup.title.string
     
     for img in soup.find_all('img'):
-        imgSection = '<br> <h1>' + soup.title.string + '</h1> <img src=' + img.attrs.get("src") + ' alt=' + soup.title.string + '>'
+        src = img.attrs.get("src").strip()
+        if "https://" not in src:
+            if link[len(link)-1] == '/' or src[0] == '/':
+                src =  link + src
+            else:
+                src = link + '/' + src
+        src.strip()
+        
+        print("Titulo: ", titulo)
+        print("Link: ", link)
+        print("SRC: ", src, "\n")
+        
+        imgSection = '<br> <h1>' + titulo + '</h1> <img src=' + src + ' alt=' + titulo + ' width="500" height="300">'
         htmlStr = htmlStr + imgSection
-        imgSection = '<p> ' + img.attrs.get("src") + '</p>'
+        imgSection = '<p> ' + src + '</p>'
         htmlStr = htmlStr + imgSection
     
 htmlStr = htmlStr + ' </body> </html>'
