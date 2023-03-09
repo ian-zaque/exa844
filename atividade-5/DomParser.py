@@ -24,11 +24,7 @@ for link in links:
                 src = link + '/' + src
         src.strip()
         
-        print("Titulo: ", titulo)
-        print("Link: ", link)
-        print("SRC: ", src, "\n")
-        
-        imgSection = '<br> <h1>' + titulo + '</h1> <img src=' + src + ' alt=' + titulo + ' width="500" height="300">'
+        imgSection = '<br> <h1>' + titulo + '</h1> <img src=' + src + ' alt=' + titulo + ' width="250" height="150">'
         htmlStr = htmlStr + imgSection
         imgSection = '<p> ' + src + '</p>'
         htmlStr = htmlStr + imgSection
