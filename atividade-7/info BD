@@ -1,0 +1,8 @@
+IP=34.95.142.61
+NAME=exa844-a7:southamerica-east1:exa844-a7
+PASSWORD=cU`6mrvPVFjqF&p0
+
+
+CREATE TABLE `Messages` (`id` int NOT NULL AUTO_INCREMENT, `message` varchar(128) NOT NULL, `autor` varchar(64) NOT NULL, `date` timestamp NOT NULL, PRIMARY KEY (`id`) )
+
+
