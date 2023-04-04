@@ -8,7 +8,9 @@ import time
 def hello_http(request):
     request_json = request.get_json(silent=True)
 
-    map = {}
+    map = dict()
+    map["message"] = ""
+
     if request_json and 'action' in request_json and request_json['action']=="put":
         try:
             conn = pymysql.connect(
@@ -32,7 +34,7 @@ def hello_http(request):
         except Exception as e:
             map["message"] = 'Error: {}'.format(str(e))
 
-    elif request_args and 'action' in request_args and request_json['action']=="get":
+    elif request_json and 'action' in request_json and request_json['action'] == "get":
         try:
             conn = pymysql.connect(
                 host="34.95.142.61",
@@ -44,13 +46,14 @@ def hello_http(request):
             )
 
             with conn:
-                with conn.cursor() as cursor:
-                    message = request_json['message']
-                    autor = request_json['autor']
-                    
-                    cursor.execute("select * from Messages where author = f{autor}")
-                    
+                with conn.cursor() as cursor:                    
+                    cursor.execute("select * from Messages ORDER BY date DESC")
                     rows = cursor.fetchall()
+                    
+                    if rows:                        
+                        for row in rows:
+                            row["date"] = row["date"].strftime("%m/%d/%Y, %H:%M:%S")
+                    
                     map["message"] = "get executed successfully"
                     map["results"] = rows
 
