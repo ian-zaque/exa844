@@ -21,7 +21,7 @@ def home():
 
     if 'username' in session:
         username = session['username']
-        running_time = (datetime.now(timezone.utc) - session.get('_creation_time'))
+        running_time = (datetime.now() - datetime.strptime( str(session.get('_creation_time')), '%Y-%m-%d %H:%M:%S' ) ).total_seconds()
         remaining_time = app.permanent_session_lifetime - running_time
 
         counter_value = request.args.get('counter',default=0, type=int) + 1
@@ -40,7 +40,7 @@ def login():
     username = request.form['username']
     nascimento = request.form['nascimento']
     session['username'] = username
-    session['_creation_time'] = datetime.now()
+    session['_creation_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     resp = make_response(redirect(url_for('home', nascimento=nascimento)))
     resp.set_cookie('nascimento', str(nascimento).encode('utf-8'), max_age=60)   
