@@ -25,7 +25,7 @@ def home():
         return f'Eai, {username}! Sua sessão termina em '+ str(remaining_time)+'. <br> <br> Você já viveu ' + str(segundos_vividos) + ' segundos :0. <br> <a href="/logout">Logout</a>'
 
     else:
-        return 'Exemplo de sessão com campo escondido e cookies! <a href="/login.html">Login</a>'
+        return 'Exemplo de sessão com campo escondido e cookies! <br> <br> <a href="/login.html">Login</a>'
 
 @app.route("/login.html")
 def loginPage():
