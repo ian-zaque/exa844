@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import json
 
 app = Flask(__name__, template_folder='templates')
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=600)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=60)
 app.secret_key = 'Yugioooooh'
 
 @app.route('/')
@@ -17,12 +17,15 @@ def home():
     if 'nascimento' in request.cookies:
         nascimento = request.cookies.get('nascimento') + " 00:00:00"
         segundos_vividos = ( datetime.now() - datetime.strptime(nascimento, '%Y-%m-%d %H:%M:%S') ).total_seconds()
+        counter_value = request.args.get('counter',default=0, type=int) + 1
 
     if 'username' in session:
         username = session['username']
         running_time = (datetime.now(timezone.utc) - session.get('_creation_time'))
         remaining_time = app.permanent_session_lifetime - running_time
-        return f'Eai, {username}! Sua sessão termina em '+ str(remaining_time)+'. <br> <br> Você já viveu ' + str(segundos_vividos) + ' segundos :0. <br> <a href="/logout">Logout</a>'
+
+        counter_value = request.args.get('counter',default=0, type=int) + 1
+        return render_template("index.html", counter=counter_value, username=username, remaining_time=remaining_time, segundos_vividos=segundos_vividos)
 
     else:
         return 'Exemplo de sessão com campo escondido e cookies! <br> <br> <a href="/login.html">Login</a>'
@@ -40,7 +43,7 @@ def login():
     session['_creation_time'] = datetime.now()
 
     resp = make_response(redirect(url_for('home', nascimento=nascimento)))
-    resp.set_cookie('nascimento', str(nascimento).encode('utf-8'), max_age=60*60)   
+    resp.set_cookie('nascimento', str(nascimento).encode('utf-8'), max_age=60)   
 
     return resp
 

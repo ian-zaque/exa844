@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h2>Eai, {{username}}! Sua sessão termina em {{remaining_time}}</h2> 
+    <br> <br> 
+    <h2>Caramba, você já viveu {{(segundos_vividos)}} segundos :0 </h2>
+    <br> <br> 
+    
+    <a href="/logout">Logout</a> 
+    
+    <br> <br> Contador: {{counter}} <br> <br> 
+    
+    <form action="/home" method="GET"> 
+        <input type="hidden" name="counter" value="{{counter}}"> 
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
