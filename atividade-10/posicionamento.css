@@ -1,0 +1,48 @@
+.esqcima, .dircima, .esqbaixo, .dirbaixo{ 
+    position: absolute;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 20%;  
+   }
+
+.esqcima {
+    background-color: red;
+    float: left;
+    position: fixed;
+    left: 0%;
+}
+
+.esqbaixo {
+    background-color: green;
+    float: left;
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+}
+
+.dircima {
+    background-color: yellow;
+    float: right;
+    position: fixed;
+    right: 0%;
+}
+
+.dirbaixo {
+    background-color: blue;
+    float: right;
+    bottom: 0%;
+    right: 0%;
+    position: fixed;
+}
+
+@media screen and (max-width:720px) {
+    .esqcima, .dircima, .esqbaixo, .dirbaixo {
+        width: 100%;
+        display: flex;
+        float: none;
+        position: relative;
+    }
+}
